@@ -27,9 +27,14 @@ def main():
     pause = True
     while running:
 
+        screen.fill(c.WHITE)
+
         new_game_state = np.copy(game_state)
 
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
             if event.type == pygame.KEYDOWN:
                 pause = not pause
 
@@ -40,7 +45,7 @@ def main():
                     np.floor(x_pos/c.CELL_WIDTH)), int(np.floor(y_pos/c.CELL_HEIGHT))
                 new_game_state[x_cell, y_cell] = not mouse_click[2]
 
-        # time.sleep(0.01)
+        time.sleep(0.1)
 
         for y in range(c.X_CELLS):
             for x in range(c.Y_CELLS):
@@ -70,7 +75,7 @@ def main():
                 else:
                     draw.square(screen, y, x, c.CELL_HEIGHT, c.WHITE)
 
-                draw.grid(screen, c.HEIGHT, c.WIDTH, c.CELL_HEIGHT, c.BLACK)
+                # draw.grid(screen, c.HEIGHT, c.WIDTH, c.CELL_HEIGHT, c.BLACK)
 
         game_state = np.copy(new_game_state)
 
