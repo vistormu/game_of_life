@@ -2,9 +2,13 @@ import numpy as np
 import pygame
 import time
 from src import draw, constants as c
+from core import logger
 
 
 def main():
+
+    # Logger
+    log = logger.Logger('main')
 
     # Initialize screen
     pygame.init()
@@ -23,20 +27,20 @@ def main():
     pause = True
     while running:
 
+        new_game_state = np.copy(game_state)
+
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 pause = not pause
 
             mouse_click = pygame.mouse.get_pressed()
-            if sum(mouse_click):
+            if any(mouse_click):
                 x_pos, y_pos = pygame.mouse.get_pos()
                 x_cell, y_cell = int(
                     np.floor(x_pos/c.CELL_WIDTH)), int(np.floor(y_pos/c.CELL_HEIGHT))
                 new_game_state[x_cell, y_cell] = not mouse_click[2]
 
-        new_game_state = np.copy(game_state)
-
-        time.sleep(0.1)
+        # time.sleep(0.01)
 
         for y in range(c.X_CELLS):
             for x in range(c.Y_CELLS):
@@ -62,9 +66,9 @@ def main():
 
                 # Draw screen
                 if new_game_state[x, y]:
-                    draw.square(screen, x, y, c.CELL_HEIGHT, c.BLACK)
+                    draw.square(screen, y, x, c.CELL_HEIGHT, c.BLACK)
                 else:
-                    draw.square(screen, x, y, c.CELL_HEIGHT, c.WHITE)
+                    draw.square(screen, y, x, c.CELL_HEIGHT, c.WHITE)
 
                 draw.grid(screen, c.HEIGHT, c.WIDTH, c.CELL_HEIGHT, c.BLACK)
 
