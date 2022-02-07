@@ -27,8 +27,6 @@ def main():
     pause = True
     while running:
 
-        screen.fill(c.WHITE)
-
         new_game_state = np.copy(game_state)
 
         for event in pygame.event.get():
@@ -73,13 +71,13 @@ def main():
                 if new_game_state[x, y]:
                     draw.square(screen, y, x, c.CELL_HEIGHT, c.BLACK)
                 else:
-                    draw.square(screen, y, x, c.CELL_HEIGHT, c.WHITE)
-
-                # draw.grid(screen, c.HEIGHT, c.WIDTH, c.CELL_HEIGHT, c.BLACK)
+                    draw.square(screen, y, x, c.CELL_HEIGHT, c.BLACK, 1)
 
         game_state = np.copy(new_game_state)
 
         pygame.display.flip()
+
+        screen.fill(c.WHITE)
 
 
 if __name__ == '__main__':
